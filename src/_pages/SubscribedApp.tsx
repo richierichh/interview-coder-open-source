@@ -60,7 +60,7 @@ const SubscribedApp: React.FC<SubscribedAppProps> = ({
     
     // Set a fallback timer to ensure dimensions are set even if content isn't fully loaded
     const fallbackTimer = setTimeout(() => {
-      window.electronAPI?.updateContentDimensions({ width: 800, height: 600 })
+      window.electronAPI?.updateContentDimensions({ width: 400, height: 1200 })
     }, 500)
 
     const resizeObserver = new ResizeObserver(updateDimensions)

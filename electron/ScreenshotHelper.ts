@@ -263,12 +263,7 @@ export class ScreenshotHelper {
     showMainWindow: () => void
   ): Promise<string> {
     console.log("Taking screenshot in view:", this.view)
-    hideMainWindow()
     
-    // Increased delay for window hiding on Windows
-    const hideDelay = process.platform === 'win32' ? 500 : 300;
-    await new Promise((resolve) => setTimeout(resolve, hideDelay))
-
     let screenshotPath = ""
     try {
       // Get screenshot buffer using cross-platform method
@@ -322,10 +317,6 @@ export class ScreenshotHelper {
     } catch (error) {
       console.error("Screenshot error:", error)
       throw error
-    } finally {
-      // Increased delay for showing window again
-      await new Promise((resolve) => setTimeout(resolve, 200))
-      showMainWindow()
     }
 
     return screenshotPath

@@ -207,10 +207,10 @@ async function createWindow(): Promise<void> {
   state.currentY = 50
 
   const windowSettings: Electron.BrowserWindowConstructorOptions = {
-    width: 800,
-    height: 600,
-    minWidth: 750,
-    minHeight: 550,
+    width: 400,
+    height: 1200,
+    minWidth: 400,
+    minHeight: 1100,
     x: state.currentX,
     y: 50,
     alwaysOnTop: true,
@@ -656,8 +656,8 @@ async function takeScreenshot(): Promise<string> {
   if (!state.mainWindow) throw new Error("No main window available")
   return (
     state.screenshotHelper?.takeScreenshot(
-      () => hideMainWindow(),
-      () => showMainWindow()
+      () => {}, // No-op for hideMainWindow
+      () => {}  // No-op for showMainWindow
     ) || ""
   )
 }

@@ -119,6 +119,11 @@ export const ComplexitySection = ({
       return "Complexity not available";
     }
 
+    // If it already has Big O notation and explanation, return as is
+    if (complexity.includes(" - ")) {
+      return complexity;
+    }
+
     const bigORegex = /O\([^)]+\)/i;
     // Return the complexity as is if it already has Big O notation
     if (bigORegex.test(complexity)) {
@@ -503,22 +508,19 @@ const Solutions: React.FC<SolutionsProps> = ({
           {/* Main Content - Modified width constraints */}
           <div className="w-full text-sm text-black bg-black/60 rounded-md">
             <div className="rounded-lg overflow-hidden">
-              <div className="px-4 py-3 space-y-4 max-w-full">
-                {!solutionData && (
-                  <>
-                    <ContentSection
-                      title="Problem Statement"
-                      content={problemStatementData?.problem_statement}
-                      isLoading={!problemStatementData}
-                    />
-                    {problemStatementData && (
-                      <div className="mt-4 flex">
-                        <p className="text-xs bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 bg-clip-text text-transparent animate-pulse">
-                          Generating solutions...
-                        </p>
-                      </div>
-                    )}
-                  </>
+              <div className="px-4 py-3 space-y-4 max-w-full overflow-y-auto max-h-[calc(100vh-200px)] scroll-smooth">
+                <ContentSection
+                  title="Problem Statement"
+                  content={problemStatementData?.problem_statement}
+                  isLoading={!problemStatementData}
+                />
+
+                {!solutionData && problemStatementData && (
+                  <div className="mt-4 flex">
+                    <p className="text-xs bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 bg-clip-text text-transparent animate-pulse">
+                      Generating solutions...
+                    </p>
+                  </div>
                 )}
 
                 {solutionData && (

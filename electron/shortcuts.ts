@@ -14,7 +14,7 @@ export class ShortcutsHelper {
     if (!mainWindow) return;
     
     let currentOpacity = mainWindow.getOpacity();
-    let newOpacity = Math.max(0.1, Math.min(1.0, currentOpacity + delta));
+    let newOpacity = Math.max(0.02, Math.min(1.0, currentOpacity + delta));
     console.log(`Adjusting opacity from ${currentOpacity} to ${newOpacity}`);
     
     mainWindow.setOpacity(newOpacity);
@@ -121,6 +121,17 @@ export class ShortcutsHelper {
       console.log("Command/Ctrl + ] pressed. Increasing opacity.")
       this.adjustOpacity(0.1)
     })
+
+    // New opacity shortcuts
+    globalShortcut.register("CommandOrControl+9", () => {
+      console.log("Command/Ctrl + 9 pressed. Setting opacity to 0.9")
+      this.adjustOpacity(0.9 - (this.deps.getMainWindow()?.getOpacity() || 1.0))
+    })
+
+    globalShortcut.register("CommandOrControl+0", () => {
+      console.log("Command/Ctrl + 0 pressed. Setting opacity to 1.0")
+      this.adjustOpacity(1.0 - (this.deps.getMainWindow()?.getOpacity() || 1.0))
+    })
     
     // Zoom controls
     globalShortcut.register("CommandOrControl+-", () => {
@@ -129,14 +140,6 @@ export class ShortcutsHelper {
       if (mainWindow) {
         const currentZoom = mainWindow.webContents.getZoomLevel()
         mainWindow.webContents.setZoomLevel(currentZoom - 0.5)
-      }
-    })
-    
-    globalShortcut.register("CommandOrControl+0", () => {
-      console.log("Command/Ctrl + 0 pressed. Resetting zoom.")
-      const mainWindow = this.deps.getMainWindow()
-      if (mainWindow) {
-        mainWindow.webContents.setZoomLevel(0)
       }
     })
     
@@ -158,6 +161,26 @@ export class ShortcutsHelper {
         mainWindow.webContents.send("delete-last-screenshot")
       }
     })
+
+    // Debug shortcut
+    globalShortcut.register("CommandOrControl+D", async () => {
+      const mainWindow = this.deps.getMainWindow();
+      if (!mainWindow) return;
+
+      // Show loading screen immediately
+      mainWindow.webContents.send("debug-start");
+
+      try {
+        const result = await this.deps.processingHelper?.generateAlternativeSolution();
+        if (result.success && result.data) {
+          mainWindow.webContents.send("debug-success", result.data);
+        } else {
+          mainWindow.webContents.send("debug-error", result.error || "Failed to generate alternative solution");
+        }
+      } catch (error: any) {
+        mainWindow.webContents.send("debug-error", error.message || "An unexpected error occurred");
+      }
+    });
     
     // Unregister shortcuts when quitting
     app.on("will-quit", () => {

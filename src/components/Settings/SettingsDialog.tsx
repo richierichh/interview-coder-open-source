@@ -302,7 +302,7 @@ export function SettingsDialog({ open: externalOpen, onOpenChange }: SettingsDia
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: 'min(450px, 90vw)',
+          width: 'min(400px, 90vw)',
           height: 'auto',
           minHeight: '400px',
           maxHeight: '90vh',
@@ -470,6 +470,9 @@ export function SettingsDialog({ open: externalOpen, onOpenChange }: SettingsDia
                 <div className="text-white/70">Process Screenshots</div>
                 <div className="text-white/90 font-mono">Ctrl+Enter / Cmd+Enter</div>
                 
+                <div className="text-white/70">Debug</div>
+                <div className="text-white/90 font-mono">Ctrl+D / Cmd+D</div>
+                
                 <div className="text-white/70">Delete Last Screenshot</div>
                 <div className="text-white/90 font-mono">Ctrl+L / Cmd+L</div>
                 
@@ -487,6 +490,12 @@ export function SettingsDialog({ open: externalOpen, onOpenChange }: SettingsDia
                 
                 <div className="text-white/70">Increase Opacity</div>
                 <div className="text-white/90 font-mono">Ctrl+] / Cmd+]</div>
+                
+                <div className="text-white/70">Set Opacity 90%</div>
+                <div className="text-white/90 font-mono">Ctrl+9 / Cmd+9</div>
+                
+                <div className="text-white/70">Set Opacity 100%</div>
+                <div className="text-white/90 font-mono">Ctrl+0 / Cmd+0</div>
                 
                 <div className="text-white/70">Zoom Out</div>
                 <div className="text-white/90 font-mono">Ctrl+- / Cmd+-</div>

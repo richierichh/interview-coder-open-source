@@ -265,8 +265,8 @@ export class ConfigHelper extends EventEmitter {
    * Set the window opacity value
    */
   public setOpacity(opacity: number): void {
-    // Ensure opacity is between 0.1 and 1.0
-    const validOpacity = Math.min(1.0, Math.max(0.1, opacity));
+    // Ensure opacity is between 0.02 and 1.0
+    const validOpacity = Math.min(1.0, Math.max(0.02, opacity));
     this.updateConfig({ opacity: validOpacity });
   }  
   
